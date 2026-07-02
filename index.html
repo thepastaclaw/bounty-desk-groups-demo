@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bounty Desk Groups Demo</title>
+    <link rel="icon" type="image/svg+xml" href="./assets/bounty-desk-mark.svg">
     <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
@@ -23,11 +24,34 @@
       </header>
 
       <main>
+        <section class="panel live-panel" aria-label="Functional live testnet workflow">
+          <div class="panel-header">
+            <div>
+              <h2>Functional Testnet App</h2>
+              <p>This section sends real Dash Platform testnet transitions from your browser. It creates a throwaway testnet wallet, asks you to fund it through Bridge, then registers identities, deploys the bounty contract, submits a token-paid claim, and runs 2-of-3 freeze/destroy actions.</p>
+            </div>
+            <span class="pill">live SDK</span>
+          </div>
+          <div class="live-warning">
+            Testnet only. The generated mnemonic is stored in this browser's localStorage so the page can sign later steps. Do not use a real wallet or mainnet seed here. Reusing old identities may fail if previous runs froze or destroyed their token balance; generate a fresh wallet for a clean run.
+          </div>
+          <div id="live-status" class="live-status"></div>
+          <div class="button-row live-buttons">
+            <button id="live-generate-wallet" type="button">1. Generate wallet</button>
+            <button id="live-register-identities" type="button">2. Register identities</button>
+            <button id="live-deploy-contract" type="button">3. Deploy contract</button>
+            <button id="live-run-flow" type="button">4. Run bounty flow</button>
+            <button id="live-membership" type="button" class="secondary">Try membership update</button>
+            <button id="live-clear" type="button" class="secondary">Clear live state</button>
+          </div>
+          <ol id="live-log" class="live-log"></ol>
+        </section>
+
         <section class="panel testnet-panel" aria-label="Testnet run status">
           <div class="panel-header">
             <div>
-              <h2>Testnet Run</h2>
-              <p>Public IDs and outcomes from the signed SDK harness. Private wallet material stays local.</p>
+              <h2>Reference Testnet Run</h2>
+              <p>Public IDs and outcomes from the earlier signed SDK harness. This is evidence, not the primary app flow.</p>
             </div>
             <a class="repo-link" href="https://github.com/thepastaclaw/bounty-desk-groups-demo">GitHub</a>
           </div>
@@ -160,5 +184,6 @@
       </main>
     </div>
     <script type="module" src="./src/app.mjs"></script>
+    <script type="module" src="./src/live-app.mjs"></script>
   </body>
 </html>

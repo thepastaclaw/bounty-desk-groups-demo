@@ -8,15 +8,31 @@ Standalone GitHub Pages-ready demo for a Dash Platform bug bounty use case:
 - the same group can destroy frozen stake when a claim is AI slop;
 - group membership changes are tested against the network.
 
-The browser app is intentionally static. It runs fully in the browser and keeps
-state in `localStorage`, while showing the SDK call shape each simulated action
-maps to.
+The browser app is intentionally static but functional on testnet. It can
+generate a throwaway testnet mnemonic, show a Bridge funding link, register
+identities, deploy the bounty contract, create a token-paid claim, and execute
+2-of-3 group-gated token actions directly from the page. The generated mnemonic
+is stored only in that browser's `localStorage` so the static page can sign
+later steps.
 
-The repository also includes a signed local testnet harness in
+The repository also includes the original signed local testnet harness in
 `scripts/network/`. Its public results are committed to
 [`data/testnet-state.json`](./data/testnet-state.json) and rendered on the
 GitHub Pages app. Mnemonics and private keys stay in `.secrets/` and are never
 committed.
+
+## Functional browser flow
+
+1. Click **Generate wallet**.
+2. Open the generated Bridge link and fund the testnet address.
+3. Click **Register identities**.
+4. Click **Deploy contract**.
+5. Click **Run bounty flow**.
+
+The page then sends real SDK transitions for direct token purchase,
+`documents.create(..., tokenPaymentInfo)`, `tokens.freeze`, and
+`tokens.destroyFrozen`. The membership-update button intentionally shows the
+current protocol limitation if the data-contract group update is rejected.
 
 ## Current testnet result
 

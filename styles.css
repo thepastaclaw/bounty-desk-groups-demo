@@ -142,6 +142,10 @@ main {
   grid-column: 1 / -1;
 }
 
+.live-panel {
+  grid-column: 1 / -1;
+}
+
 .column {
   display: grid;
   gap: 18px;
@@ -188,6 +192,89 @@ main {
 
 .testnet-status {
   min-width: 0;
+}
+
+.live-status {
+  min-width: 0;
+}
+
+.live-warning {
+  border: 1px solid #f1c76a;
+  border-radius: 7px;
+  background: #fff8e6;
+  color: #6d4f00;
+  font-weight: 700;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+}
+
+.live-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.live-card {
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #f8fafc;
+  min-width: 0;
+  padding: 12px;
+}
+
+.live-card h3 {
+  font-size: 14px;
+  margin: 0 0 10px;
+}
+
+.live-card dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.live-card dt {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.live-card dd {
+  margin: 2px 0 0;
+  min-width: 0;
+}
+
+.live-buttons {
+  margin-top: 14px;
+}
+
+.live-log {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0 0;
+  max-height: 260px;
+  overflow: auto;
+  padding-left: 20px;
+}
+
+.live-log li {
+  color: #344054;
+  font-size: 13px;
+}
+
+.live-log li.warn {
+  color: var(--gold);
+}
+
+.live-log li.error {
+  color: var(--red);
+}
+
+.live-log time {
+  color: var(--muted);
+  display: inline-block;
+  min-width: 78px;
 }
 
 .testnet-grid {
@@ -525,6 +612,10 @@ code {
     grid-template-columns: 1fr 1fr;
   }
 
+  .live-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .token-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -547,6 +638,10 @@ code {
   }
 
   .testnet-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .live-grid {
     grid-template-columns: 1fr;
   }
 }

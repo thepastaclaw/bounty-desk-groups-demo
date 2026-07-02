@@ -16,6 +16,9 @@ from the latest harness run.
   - group action proposal/sign/execute envelopes
 - `npm run network:e2e` has completed on Dash Platform testnet with the public
   contract/token/identity IDs in `data/testnet-state.json`.
+- Browser live-mode smoke coverage has verified that the static page can load
+  the vendored SDK bundle, generate a testnet wallet/address, connect to
+  testnet, and submit live SDK calls from the page context.
 
 ## Live Testnet Coverage
 
@@ -36,6 +39,10 @@ Failed / not supported by the tested path:
   rejected by Platform with `change group at position 0 is not allowed`.
 - That means the mutable-membership requirement is not proven yet. It likely
   needs a different protocol path, SDK surface, or a Platform change.
+- Re-running the full flow against the previously used reporter identity failed
+  at document creation because that identity is now frozen for the BNTY token.
+  That is expected statefulness from the earlier freeze/destroy test; a clean
+  browser run should use freshly generated/funded testnet identities.
 
 ## Still Required Before Calling It Fully Live-Working
 
@@ -48,7 +55,7 @@ Failed / not supported by the tested path:
 3. Record state-transition hashes once the SDK exposes them cleanly from these
    helper calls.
 4. Keep signing in local scripts or a real wallet integration; do not put
-   mnemonic/private-key material into the GitHub Pages app.
+   any shared mnemonic/private-key material into the GitHub Pages app.
 
 ## Current Status
 
