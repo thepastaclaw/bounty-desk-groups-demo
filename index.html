@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bounty Desk Groups Demo</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <img src="./assets/bounty-desk-mark.svg" alt="">
+          <div>
+            <h1>Bounty Desk</h1>
+            <p>Token-gated bug bounty claims governed by a 2-of-3 Dash Platform group.</p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <button id="run-scenario" type="button">Run demo script</button>
+          <button id="reset-demo" type="button" class="secondary">Reset</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="column" aria-label="Bounty operations">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h2>Reporter Stake Tokens</h2>
+                <p>Buying tokens makes a claim eligible; submitting locks one token as stake.</p>
+              </div>
+            </div>
+            <div id="token-stats" class="token-grid"></div>
+            <form id="purchase-form" class="form-grid two" autocomplete="off">
+              <label>
+                Buy BNTY
+                <input name="amount" type="number" min="1" step="1" value="2">
+              </label>
+              <label>
+                Token payment info
+                <textarea id="token-payment-info" readonly></textarea>
+              </label>
+              <button type="submit">Buy tokens</button>
+            </form>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h2>Submit Bounty Claim</h2>
+                <p>Creates a `bountyClaim` document and passes `tokenPaymentInfo`.</p>
+              </div>
+            </div>
+            <form id="claim-form" class="form-grid" autocomplete="off">
+              <label>
+                Title
+                <input name="title" required maxlength="80" placeholder="Unauthenticated contract mutation">
+              </label>
+              <label>
+                Severity
+                <select name="severity">
+                  <option value="critical">Critical</option>
+                  <option value="high">High</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="low">Low</option>
+                </select>
+              </label>
+              <label>
+                Summary
+                <textarea name="summary" required maxlength="420" placeholder="Describe the bug report in a way reviewers can triage."></textarea>
+              </label>
+              <button type="submit">Create claim document</button>
+            </form>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h2>Group Membership</h2>
+                <p>Three equal members, threshold two. Membership changes are group actions.</p>
+              </div>
+              <span class="pill">2 of 3</span>
+            </div>
+            <ul id="group-members" class="members"></ul>
+            <form id="replace-form" class="form-grid two" autocomplete="off">
+              <label>
+                Proposer
+                <select name="proposerId" id="replace-proposer"></select>
+              </label>
+              <label>
+                Replace member ID
+                <input name="oldMemberId" value="casey">
+              </label>
+              <label>
+                New member ID
+                <input name="newMemberId" value="devon">
+              </label>
+              <label>
+                New member name
+                <input name="newMemberName" value="Devon">
+              </label>
+              <button type="submit">Propose membership change</button>
+            </form>
+          </section>
+        </section>
+
+        <section class="column" aria-label="Review desk">
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h2>Claims</h2>
+                <p>Reviewers can approve, freeze, or destroy frozen slop stake.</p>
+              </div>
+            </div>
+            <div id="claims"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h2>Open Group Actions</h2>
+                <p>Each action executes when signatures reach two voting-power units.</p>
+              </div>
+            </div>
+            <div id="actions"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <div>
+                <h2>Event Log</h2>
+                <p>Compact audit trail of token, document, and group events.</p>
+              </div>
+            </div>
+            <ul id="events" class="feed"></ul>
+          </section>
+
+          <section class="panel sdk">
+            <div class="panel-header">
+              <div>
+                <h2>SDK Call Trace</h2>
+                <p>The static simulator records the Platform SDK shape each action maps to.</p>
+              </div>
+            </div>
+            <div id="sdk-trace"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="./src/app.mjs"></script>
+  </body>
+</html>

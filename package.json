@@ -1,0 +1,15 @@
+{
+  "name": "bounty-desk-groups-demo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Standalone GitHub Pages demo for Dash Platform groups, token-paid documents, and group-gated token controls.",
+  "scripts": {
+    "test": "node --test",
+    "serve": "python3 -m http.server 4173",
+    "check": "node --test"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
