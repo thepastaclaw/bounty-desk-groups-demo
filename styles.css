@@ -138,6 +138,10 @@ main {
   padding: 22px clamp(16px, 3vw, 40px) 42px;
 }
 
+.testnet-panel {
+  grid-column: 1 / -1;
+}
+
 .column {
   display: grid;
   gap: 18px;
@@ -168,6 +172,124 @@ main {
 .panel p {
   color: var(--muted);
   margin: 4px 0 0;
+}
+
+.repo-link {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  color: var(--blue);
+  font-weight: 800;
+  min-height: 34px;
+  padding: 0 12px;
+  text-decoration: none;
+}
+
+.testnet-status {
+  min-width: 0;
+}
+
+.testnet-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.9fr) minmax(280px, 1.2fr) minmax(280px, 1fr) minmax(300px, 1.2fr);
+  gap: 12px;
+}
+
+.testnet-card {
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface-2);
+  min-width: 0;
+  padding: 12px;
+}
+
+.testnet-card h3 {
+  font-size: 14px;
+  margin: 0 0 10px;
+}
+
+.record-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.record-list div {
+  min-width: 0;
+}
+
+.record-list dt {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.record-list dd {
+  margin: 2px 0 0;
+  min-width: 0;
+}
+
+code {
+  color: #223149;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.check-list,
+.trace-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.check-list {
+  list-style: none;
+}
+
+.check-list li {
+  display: grid;
+  grid-template-columns: 10px 1fr;
+  align-items: start;
+  gap: 8px;
+  color: #344054;
+  font-size: 13px;
+}
+
+.check-list span {
+  width: 10px;
+  height: 10px;
+  margin-top: 5px;
+  border-radius: 50%;
+  background: var(--muted);
+}
+
+.check-list .pass span {
+  background: var(--green);
+}
+
+.check-list .warn span {
+  background: var(--gold);
+}
+
+.check-list .fail span {
+  background: var(--red);
+}
+
+.trace-list {
+  padding-left: 18px;
+}
+
+.trace-list li {
+  color: #344054;
+  font-size: 13px;
+}
+
+.trace-list span {
+  display: block;
+  margin-top: 2px;
 }
 
 .token-grid {
@@ -399,6 +521,10 @@ main {
     grid-template-columns: 1fr;
   }
 
+  .testnet-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .token-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -417,6 +543,10 @@ main {
   }
 
   .token-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .testnet-grid {
     grid-template-columns: 1fr;
   }
 }

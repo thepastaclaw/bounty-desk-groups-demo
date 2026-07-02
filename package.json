@@ -7,9 +7,19 @@
   "scripts": {
     "test": "node --test",
     "serve": "python3 -m http.server 4173",
-    "check": "node --test"
+    "check": "node --test",
+    "network:wallet": "node scripts/network/create-wallet.mjs",
+    "network:identities": "node scripts/network/register-identities.mjs",
+    "network:topup": "node scripts/network/top-up-identities.mjs",
+    "network:contract": "node scripts/network/deploy-contract.mjs",
+    "network:e2e": "node scripts/network/run-e2e.mjs",
+    "network:membership": "node scripts/network/update-membership.mjs"
   },
   "engines": {
     "node": ">=22"
+  },
+  "dependencies": {
+    "@dashevo/evo-sdk": "^4.0.0",
+    "dotenv": "^16.6.1"
   }
 }

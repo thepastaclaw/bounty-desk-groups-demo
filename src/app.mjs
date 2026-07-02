@@ -21,6 +21,7 @@ const els = {
   actions: document.querySelector("#actions"),
   events: document.querySelector("#events"),
   sdkTrace: document.querySelector("#sdk-trace"),
+  testnetStatus: document.querySelector("#testnet-status"),
   purchaseForm: document.querySelector("#purchase-form"),
   claimForm: document.querySelector("#claim-form"),
   replaceForm: document.querySelector("#replace-form"),
@@ -54,12 +55,18 @@ function update(mutator) {
 }
 
 function render() {
+  renderTestnetLoading();
   renderTokenStats();
   renderMembers();
   renderClaims();
   renderActions();
   renderEvents();
   renderSdkTrace();
+}
+
+function renderTestnetLoading() {
+  if (!els.testnetStatus || els.testnetStatus.dataset.loaded === "true") return;
+  els.testnetStatus.innerHTML = empty("Loading public testnet run data...");
 }
 
 function renderTokenStats() {
@@ -164,6 +171,106 @@ function renderSdkTrace() {
   `).join("") || empty("SDK-shaped calls appear here as you use the app.");
 }
 
+async function renderTestnetState() {
+  if (!els.testnetStatus) return;
+  try {
+    const response = await fetch("./data/testnet-state.json", { cache: "no-store" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const testnet = await response.json();
+    els.testnetStatus.dataset.loaded = "true";
+    els.testnetStatus.innerHTML = testnetStateHtml(testnet);
+  } catch (error) {
+    els.testnetStatus.dataset.loaded = "true";
+    els.testnetStatus.innerHTML = empty(`No public testnet run data found: ${error.message}`);
+  }
+}
+
+function testnetStateHtml(testnet) {
+  const latestRun = testnet.runs?.at(-1);
+  const membership = testnet.membershipUpdate;
+  const contract = testnet.contract || {};
+  return `
+    <div class="testnet-grid">
+      ${testnetCard("Network", [
+    ["Network", testnet.network],
+    ["Generated", formatDate(testnet.generatedAt)],
+    ["Contract", contract.contractId],
+    ["Token", contract.tokenId],
+  ])}
+      ${testnetCard("Identities", Object.entries(testnet.identities || {}).map(([role, identity]) => [
+    role,
+    identity.identityId,
+  ]))}
+      <div class="testnet-card">
+        <h3>Passed on testnet</h3>
+        <ul class="check-list">
+          ${checkItem("pass", "Direct purchase price set by contract owner")}
+          ${checkItem("pass", "Reporter bought BNTY stake tokens")}
+          ${checkItem("pass", "bountyClaim document created with tokenPaymentInfo")}
+          ${checkItem("pass", "2-of-3 group froze reporter token balance")}
+          ${checkItem("pass", "2-of-3 group destroyed frozen slop stake")}
+          ${checkItem(membership?.status === "rejected" ? "warn" : "pass", membershipLabel(membership))}
+        </ul>
+      </div>
+      <div class="testnet-card">
+        <h3>Latest run trace</h3>
+        ${latestRun ? `<ol class="trace-list">${latestRun.trace.map((entry) => (
+    `<li><code>${escapeHtml(entry.step)}</code><span>${traceSummary(entry)}</span></li>`
+  )).join("")}</ol>` : empty("No signed run recorded yet.")}
+      </div>
+    </div>
+  `;
+}
+
+function testnetCard(title, rows) {
+  return `
+    <div class="testnet-card">
+      <h3>${escapeHtml(title)}</h3>
+      <dl class="record-list">
+        ${rows.map(([label, value]) => `
+          <div>
+            <dt>${escapeHtml(label)}</dt>
+            <dd><code>${escapeHtml(value || "not recorded")}</code></dd>
+          </div>
+        `).join("")}
+      </dl>
+    </div>
+  `;
+}
+
+function checkItem(kind, text) {
+  return `<li class="${kind}"><span></span>${escapeHtml(text)}</li>`;
+}
+
+function membershipLabel(membership) {
+  if (!membership) return "Membership replacement not run yet";
+  if (membership.status === "rejected") {
+    return "Membership replacement was attempted and rejected by Platform protocol";
+  }
+  return "Membership replacement completed";
+}
+
+function traceSummary(entry) {
+  if (entry.documentId) return `document ${entry.documentId}`;
+  if (entry.actionId) return `action ${entry.actionId}, group power ${entry.groupPower}`;
+  if (entry.balances) {
+    return Object.entries(entry.balances).map(([identityId, balance]) => `${identityId.slice(0, 8)}... = ${balance}`).join(", ");
+  }
+  if (entry.price) return `price ${entry.price}`;
+  if (entry.tokenPayment) return entry.tokenPayment;
+  if (entry.groupPower) return `group power ${entry.groupPower}`;
+  return "accepted";
+}
+
+function formatDate(value) {
+  if (!value) return "";
+  try {
+    return new Date(value).toLocaleString();
+  } catch {
+    return value;
+  }
+}
+
 function claimButton(type, targetId, label) {
   return `<button class="small" data-propose="${type}" data-target="${targetId}">${label}</button>`;
 }
@@ -263,3 +370,4 @@ els.scenarioButton.addEventListener("click", () => update(runHappyPathScenario))
 document.querySelector("#token-payment-info").textContent = JSON.stringify(TOKEN_PAYMENT_INFO, null, 2);
 
 render();
+renderTestnetState();
