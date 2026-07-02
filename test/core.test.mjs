@@ -106,3 +106,62 @@ test("membership changes are group-gated and removed members can no longer sign"
     /Only current group members/,
   );
 });
+
+test("a group member cannot sign the same action twice", () => {
+  let state = purchaseTokens(createInitialState(), 1);
+  state = submitClaim(state, { title: "Duplicate signer", summary: "One signer cannot count twice." });
+  state = proposeAction(state, {
+    type: "freeze-claim",
+    targetId: state.claims[0].id,
+    proposerId: "avery",
+  });
+
+  assert.throws(
+    () => signAction(state, state.actions[0].id, "avery"),
+    /already signed/,
+  );
+});
+
+test("non-members cannot propose or sign group actions", () => {
+  let state = purchaseTokens(createInitialState(), 1);
+  state = submitClaim(state, { title: "Outsider", summary: "Mallory is not on the committee." });
+
+  assert.throws(
+    () => proposeAction(state, {
+      type: "freeze-claim",
+      targetId: state.claims[0].id,
+      proposerId: "mallory",
+    }),
+    /Only current group members/,
+  );
+
+  state = proposeAction(state, {
+    type: "freeze-claim",
+    targetId: state.claims[0].id,
+    proposerId: "avery",
+  });
+
+  assert.throws(
+    () => signAction(state, state.actions[0].id, "mallory"),
+    /Only current group members/,
+  );
+});
+
+test("approved claims return stake instead of freezing or destroying it", () => {
+  let state = purchaseTokens(createInitialState(), 1);
+  state = submitClaim(state, {
+    title: "Real bug",
+    summary: "A valid issue that should remain eligible for payout.",
+  });
+  state = proposeAction(state, {
+    type: "approve-claim",
+    targetId: state.claims[0].id,
+    proposerId: "avery",
+  });
+  state = signAction(state, state.actions[0].id, "casey");
+
+  assert.equal(state.claims[0].status, "eligible-for-payout");
+  assert.equal(state.claims[0].stakeState, "returned");
+  assert.equal(state.token.reporterLiquid, 1);
+  assert.equal(state.token.destroyed, 0);
+});

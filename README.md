@@ -38,3 +38,5 @@ The simulator mirrors the public SDK surfaces used by the existing reference app
 - group reads: `sdk.group.members(query)`, `sdk.group.actions(query)`, `sdk.group.actionSigners(query)`
 
 Actual group action signing/broadcasting is represented as a governance envelope in this demo because this static site has no wallet, identities, funded testnet contract, or signer backend.
+
+See [`TESTING.md`](./TESTING.md) for the difference between the current simulator validation and the live testnet coverage needed before calling the use case end-to-end verified.
