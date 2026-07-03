@@ -1,38 +1,38 @@
 {
   "network": "testnet",
-  "generatedAt": "2026-07-02T20:05:10.925Z",
+  "generatedAt": "2026-07-03T20:38:40.366Z",
   "identities": {
     "owner": {
-      "identityId": "6qaU3Y3DtzzBUXuYdUmP7mWHuoo3vGFQDbTDFmTPyEmL",
+      "identityId": "9nYqFyvAv5MQGvW7NPPbzrqV38WYHBoyEruiXmfubada",
       "identityIndex": 0
     },
     "reporter": {
-      "identityId": "AGdZNnKrSjTsXoWjbrXJ5aNQ1bcdxgU88o8S62aWNwB5",
+      "identityId": "Bs1hQ7wuzRqEi9k2xjrSSwainsRtB2j17ht6N6hSQ7Sw",
       "identityIndex": 1
     },
     "reviewerA": {
-      "identityId": "5ed69SyYm1Vnked2vge1HbSJjDXXhaFqod82s2epWGwG",
+      "identityId": "7quy92sSSxcnLZvfkhcertEgbwWqrDBVT27jn3XCTtMa",
       "identityIndex": 2
     },
     "reviewerB": {
-      "identityId": "HyQfQ8mgjpX8wZiDM69gx2JCdPdot1iVhRYuBVmmsA9P",
+      "identityId": "66B8hzYaK5Ro9nYX6yRbZwaeR2iouxeqdDqXUG6yoqjs",
       "identityIndex": 3
     },
     "reviewerC": {
-      "identityId": "8Arz5PLGQwEDFpmuxEhHdghXRy7GuKVyReubpGyC8qQB",
+      "identityId": "5aagGRCWz25oWwgGcsn5rSCBc4YMnVtMsHEVNzahdqS6",
       "identityIndex": 4
     },
     "reviewerD": {
-      "identityId": "5S6fKfi9fhiCGTCpmxyZfTxEiDDcgRfsS2FPeGDyiq4o",
+      "identityId": "Fn3zp9DWtfzvWqLCT2bQDwZA6Re8xAp35DMim5BRtRwL",
       "identityIndex": 5
     }
   },
   "contract": {
-    "contractId": "GArmHoHXNPhoVXr8yGw7VxXTGwqX5ncy3vMoRdAiJkWg",
-    "tokenId": "GWX4MJbZyaDLcxuZKcmaFoFh7oe9GrP68J64VwsSYdNF",
+    "contractId": "22Q2hZPfeYpwJ2qAB99p6FCJdRcM3kHoAMTkRNSnRiGW",
+    "tokenId": "2KZFVgVGK7hb1kuTnsgCEXDY7RKhNR87kgH616B3Tn36",
     "tokenPosition": 0,
     "groupPosition": 0,
-    "deployedAt": "2026-07-02T19:56:58.343Z"
+    "deployedAt": "2026-07-03T20:36:59.008Z"
   },
   "runs": [
     {
@@ -95,25 +95,86 @@
           }
         }
       ]
+    },
+    {
+      "at": "2026-07-03T20:37:20.807Z",
+      "status": "completed",
+      "trace": [
+        {
+          "step": "token.setPrice",
+          "at": "2026-07-03T20:37:10.403Z",
+          "ownerId": "9nYqFyvAv5MQGvW7NPPbzrqV38WYHBoyEruiXmfubada",
+          "price": "1000"
+        },
+        {
+          "step": "token.directPurchase",
+          "at": "2026-07-03T20:37:12.184Z",
+          "buyerId": "undefined"
+        },
+        {
+          "step": "documents.create",
+          "at": "2026-07-03T20:37:13.542Z",
+          "documentId": "5DZKtUM6PUQoAHqfrJXbFm7Dm4PUvy1wD4MQibDGKh8e",
+          "tokenPayment": "1 BNTY transferred to contract owner"
+        },
+        {
+          "step": "tokens.balances.afterDocument",
+          "at": "2026-07-03T20:37:13.739Z",
+          "balances": {
+            "9nYqFyvAv5MQGvW7NPPbzrqV38WYHBoyEruiXmfubada": "1",
+            "Bs1hQ7wuzRqEi9k2xjrSSwainsRtB2j17ht6N6hSQ7Sw": "2"
+          }
+        },
+        {
+          "step": "tokens.freeze.propose",
+          "at": "2026-07-03T20:37:15.601Z",
+          "groupPower": "1"
+        },
+        {
+          "step": "tokens.freeze.sign",
+          "at": "2026-07-03T20:37:17.117Z",
+          "actionId": "2XSAyTS3JHTjMYXQ4Dw6Hzsqw6UGWJsph24kCE5rwKHt",
+          "groupPower": "2"
+        },
+        {
+          "step": "tokens.destroyFrozen.propose",
+          "at": "2026-07-03T20:37:18.763Z",
+          "groupPower": "1"
+        },
+        {
+          "step": "tokens.destroyFrozen.sign",
+          "at": "2026-07-03T20:37:20.723Z",
+          "actionId": "764DZ1pDExPYZTRdu8Ty2qP9zFqHMsr2JXTyGYTHHQwh",
+          "groupPower": "2"
+        },
+        {
+          "step": "tokens.balances.final",
+          "at": "2026-07-03T20:37:20.807Z",
+          "balances": {
+            "9nYqFyvAv5MQGvW7NPPbzrqV38WYHBoyEruiXmfubada": "1",
+            "Bs1hQ7wuzRqEi9k2xjrSSwainsRtB2j17ht6N6hSQ7Sw": "0"
+          }
+        }
+      ]
     }
   ],
   "notes": [
     "Public identity IDs only. Mnemonic and signing material are local in .secrets/ and not committed."
   ],
-  "fundingAddress": "tdash1kz9psqwdv3pmrw3ef5dyehak9m7ffttq8yymgu4c",
+  "fundingAddress": "tdash1kp7k8czluthjydfxj33w5dk24m0mpz2k9qc8j6lw",
   "membershipUpdate": {
-    "at": "2026-07-02T20:05:10.925Z",
+    "at": "2026-07-03T20:38:40.365Z",
     "status": "rejected",
     "attempted": "reviewerC -> reviewerD",
     "before": {
       "requiredPower": 2,
       "members": {
-        "5ed69SyYm1Vnked2vge1HbSJjDXXhaFqod82s2epWGwG": 1,
-        "8Arz5PLGQwEDFpmuxEhHdghXRy7GuKVyReubpGyC8qQB": 1,
-        "HyQfQ8mgjpX8wZiDM69gx2JCdPdot1iVhRYuBVmmsA9P": 1
+        "5aagGRCWz25oWwgGcsn5rSCBc4YMnVtMsHEVNzahdqS6": 1,
+        "66B8hzYaK5Ro9nYX6yRbZwaeR2iouxeqdDqXUG6yoqjs": 1,
+        "7quy92sSSxcnLZvfkhcertEgbwWqrDBVT27jn3XCTtMa": 1
       }
     },
-    "error": "state transition broadcast error: Action 'change group at position 0 is not allowed' is not allowed on Data Contract GArmHoHXNPhoVXr8yGw7VxXTGwqX5ncy3vMoRdAiJkWg",
+    "error": "state transition broadcast error: Action 'change group at position 0 is not allowed' is not allowed on Data Contract 22Q2hZPfeYpwJ2qAB99p6FCJdRcM3kHoAMTkRNSnRiGW",
     "note": "Platform rejected changing group membership through a data-contract update; this is the current live test result for mutable groups."
   }
 }
